@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.flower {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    animation: bloom 5s ease-in-out infinite;
+}
+
+@keyframes bloom {
+    0% {transform: translateY(100vh);}
+    50% {transform: translateY(0);}
+    100% {transform: scale(2);}
+}
+
+@keyframes bloom {
+    0% {transform: translateY(100vh);}
+    50% {transform: translateY(0);}
+    100% {transform: scale(2);}
+}
+
+@keyframes fade {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;} 
+}
+
+.heart {
+    color: crimson;
+    position: absolute;
+    left: 50%; top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%); transition
+}
+
+
+
