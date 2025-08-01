@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>For Clarissa 💙</title> 
+  <link rel="stylesheet" href="style.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&amp;display=swap" rel="stylesheet"> 
+ <style type="text/css" id="dcoder_stylesheet">body {
+  font-family: 'Indie Flower', cursive;
+  background: linear-gradient(to right, #ffe6ec, #fceabb);
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+a:link {
+  color: white;
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: pink;
+  text-decoration: none;
+  text-shadow: black;
+}
+
+.message-box,
+.game-box,
+.result-box,
+.popup-game {
+  margin-top: 25px;
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(255, 245, 247, 0.9);
+  box-shadow: 0 0 15px rgba(255, 105, 135, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+.emoji {
+  position: fixed;
+  font-size: 24px;
+  opacity: 0.9;
+  z-index: 999;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-50px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-group button,
+.game-options button,
+.will-you-buttons button,
+.popup-game button {
+  margin: 10px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+#yesBtn, #willYesBtn {
+  background: #ffb6c1;
+  color: white;
+  box-shadow: 0 0 10px #ffb6c1aa;
+}
+
+#noBtn, #willNoBtn {
+  background: white;
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+  position: relative;
+  box-shadow: 0 0 6px rgba(255, 105, 180, 0.2);
+}
+
+.try-again button {
+  background: #ffd1dc;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.followUp {
+  font-size: 1.3em;
+  color: #e75480;
+  margin-top: 15px;
+}</style></head> 
+ <body> 
+  <div class="container"> 
+   <h1>Hi, Clarissa 🌸</h1> 
+   <div class="btn-group"> <button onclick="showMessage()">Message</button> <button onclick="showGame()">Play Game</button> 
+   </div> 
+   <div class="message-box hidden"> 
+    <p id="typingText"></p> 
+   </div> 
+   <div class="game-box hidden"> 
+    <h2>Do you love me?</h2> 
+    <div class="game-options"> <button id="yesBtn">Yes 💖</button> <button id="noBtn">No 🙅‍♀️</button> 
+    </div> 
+    <div class="try-again hidden"> <button onclick="resetGame()">Try Again 🔁</button> 
+    </div> 
+   </div> 
+   <div class="result-box hidden"> 
+    <h2 id="loveText">I knew it! </h2> 
+    <p class="followUp hidden">I love u moree <br>So... will you be mine? 💍</p> 
+    <div class="will-you-buttons hidden"> <button id="willYesBtn">Yes ❤️</button> <button id="willNoBtn">No🤏</button> 
+    </div> 
+   </div> 
+   <div class="popup-game hidden" id="popupGame"> 
+    <h2>🎉 Let's play another game!</h2> 
+    <p>Disini aja, sukanya di sini kan, agak aneh emang</p> <button><a href="https://www.instagram.com/syms.fatih_?igsh=MW0yY2dwam9nMmt1Yg==">Mulai Game 💞</a></button> 
+   </div> 
+  </div> 
+  <script src="script.js"></script> 
+ 
+<script type="text/javascript" id="dcoder_script">const typingText = document.getElementById("typingText");
+const messageBox = document.querySelector(".message-box");
+const gameBox = document.querySelector(".game-box");
+const resultBox = document.querySelector(".result-box");
+const followUp = document.querySelector(".followUp");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const tryAgain = document.querySelector(".try-again");
+const willYouButtons = document.querySelector(".will-you-buttons");
+const willYesBtn = document.getElementById("willYesBtn");
+const willNoBtn = document.getElementById("willNoBtn");
+const popupGame = document.getElementById("popupGame");
+
+let message = `I'm drawn to you and chasing after you not just because I like you, but because there's something in you that makes me wanna grow. You feel like someone a few steps ahead of me—bukan dengan cara yang bikin aku minder yaa, tapi justru bikin aku pengen kejar itu. Thank you, Shandana Clarissa Auliavera. I’m truly happy to know you`;
+let index = 0;
+let typingStarted = false;
+
+function showMessage() {
+  gameBox.classList.add("hidden");
+  resultBox.classList.add("hidden");
+  popupGame.classList.add("hidden");
+  messageBox.classList.remove("hidden");
+
+  dropEmojis(["❄️", "💫", "🌸", "💖", "🪽"]);
+
+  if (!typingStarted) {
+    typingText.innerHTML = "";
+    index = 0;
+    typeWriter();
+    typingStarted = true;
+  }
+}
+
+function typeWriter() {
+  if (index < message.length) {
+    typingText.innerHTML += message.charAt(index);
+    index++;
+    setTimeout(typeWriter, 30);
+  }
+}
+
+function showGame() {
+  messageBox.classList.add("hidden");
+  resultBox.classList.add("hidden");
+  popupGame.classList.add("hidden");
+  gameBox.classList.remove("hidden");
+  resetGame();
+  dropEmojis(["❄️", "💫", "🌸", "💖", "🪽"]);
+}
+
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 300;
+  const y = Math.random() * 200;
+  noBtn.style.position = "absolute";
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+});
+
+yesBtn.addEventListener("click", () => {
+  gameBox.classList.add("hidden");
+  resultBox.classList.remove("hidden");
+  followUp.classList.remove("hidden");
+
+  setTimeout(() => {
+    willYouButtons.classList.remove("hidden");
+  }, 1000);
+});
+
+willNoBtn.addEventListener("mousemove", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  willNoBtn.style.left = `${x}px`;
+  willNoBtn.style.top = `${y}px`;
+  willNoBtn.style.position = "absolute";
+});
+
+willYesBtn.addEventListener("click", () => {
+  willYouButtons.classList.add("hidden");
+  popupGame.classList.remove("hidden");
+});
+
+function resetGame() {
+  noBtn.style.position = "relative";
+  noBtn.style.left = "0px";
+  noBtn.style.top = "0px";
+  tryAgain.classList.add("hidden");
+  followUp.classList.add("hidden");
+  willYouButtons.classList.add("hidden");
+  popupGame.classList.add("hidden");
+}
+
+noBtn.addEventListener("click", () => {
+  tryAgain.classList.remove("hidden");
+});
+
+function dropEmojis(emojis) {
+  for (let i = 0; i < 20; i++) {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.top = "-50px";
+    emoji.style.fontSize = `${Math.random() * 12 + 18}px`;
+    emoji.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    document.body.appendChild(emoji);
+
+    setTimeout(() => emoji.remove(), 5000);
+  }
+}</script></body></html>
